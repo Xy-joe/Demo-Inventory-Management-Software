@@ -36,7 +36,7 @@ public class Supermarket {
         JTextArea ta = new JTextArea();
     JPanel orderpane = new JPanel();
 
-    ImageIcon img = new ImageIcon(getClass().getResource("pg.jpg"));
+    ImageIcon img = new ImageIcon(getClass().getResource("resource/pg.jpg"));
     ImageIcon img1 = new ImageIcon(getClass().getResource("pgg.jpg"));
 
     private void retrieve(){
