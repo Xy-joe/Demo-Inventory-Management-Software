@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class Orderview extends JApplet {
 
+    
     public JPanel pan1 = new JPanel();
 
     public JPanel pan2 = new JPanel();    // Create a button
