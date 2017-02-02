@@ -11,7 +11,7 @@ It aims to be something unique that would have attention than others. SO designs
 There is just one table for now on this project which is the product table.
 The Acces right ont the table is restricted in some areas o the receptionist/cashier as the case may be. ut it's completely accessible to the administrator.
 Below is a markdown of how the image of the database looks like
-![](./Pegasus/resource/githu.png)
+![](./resource/githu.png)
 
 #Designs
 Well for the designs i would really appreciate some help in making it look nice.
