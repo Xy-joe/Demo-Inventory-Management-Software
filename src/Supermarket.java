@@ -14,6 +14,7 @@ public class Supermarket {
   JPanel prodf;
     JFrame fame;
   JTable costomertable;
+    ImageIcon img;
      JTable tab;
     double price = 0;
 
@@ -36,15 +37,14 @@ public class Supermarket {
         JTextArea ta = new JTextArea();
     JPanel orderpane = new JPanel();
 
-    ImageIcon img = new ImageIcon(getClass().getResource("resource/pg.jpg"));
-    ImageIcon img1 = new ImageIcon(getClass().getResource("pgg.jpg"));
-
     private void retrieve(){
         DefaultTableModel dt  = new pgsConnect().supermaketDataretrival();
         costomertable.setModel(dt);
     }
     JTextField datetF,prodID, prodname, prodprice, amount, balance, searchtf, pp, psearch, ppr,bcodetf, pq, sntf, bartf;
    public Supermarket() {
+       img = new ImageIcon();
+       img.getClass().getResource("resource/pg.jpg");
        fame = new JFrame();
         fame.setBounds(400,400,1100,700);
       fame.setLocationRelativeTo(null);

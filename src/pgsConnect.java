@@ -21,8 +21,7 @@ public class pgsConnect {
 
             while (rr.next()) {
 
-                int id = rr.getInt(1);String sn = Integer.toString(id);
-                int ID = rr.getInt(2); String produID = Integer.toString(ID);
+                int id = rr.getInt(1);String sn = Integer.toString(id);int ID = rr.getInt(2); String produID = Integer.toString(ID);
                 String date = rr.getString(3);
                 String bcode = rr.getString(4);
                 String prod = rr.getString(5);
