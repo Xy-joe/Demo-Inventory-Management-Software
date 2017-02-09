@@ -44,7 +44,7 @@ public class Supermarket {
     JTextField datetF,prodID, prodname, prodprice, amount, balance, searchtf, pp, psearch, ppr,bcodetf, pq, sntf, bartf;
    public Supermarket() {
        img = new ImageIcon();
-       img.getClass().getResource("resource/pg.jpg");
+       img.getClass().getResource("resource/githu");
        fame = new JFrame();
         fame.setBounds(400,400,1100,700);
       fame.setLocationRelativeTo(null);
@@ -62,7 +62,6 @@ public class Supermarket {
        JPanel imgpane = new JPanel();
        imgpane.setLayout(new BorderLayout());
        JLabel pg = new JLabel(img);
-       imgpane.add(pg);
           final JPanel welcome = new JPanel();
           welcome.setLayout(new BorderLayout());
          welcome.setBackground(Color.decode("#2a334f"));
@@ -87,7 +86,8 @@ public class Supermarket {
       pri.setBounds(79,79,100,79);
        menubtn.add(pro);
       menubtn.add(pri);
-       imgpane.add(pg, BorderLayout.CENTER);
+
+       imgpane.add(pg);
        imgpane.add(menubtn, BorderLayout.SOUTH);
        welcome.add(supname, BorderLayout.NORTH);
       welcome.add(imgpane, BorderLayout.CENTER);
@@ -102,7 +102,6 @@ public class Supermarket {
        prodprice = new JTextField(20); prodprice.setFont(new Font("mry_kacstQum", Font.BOLD+Font.ITALIC, 15));
        pp = new JTextField(20); pp.setFont(new Font("mry_kacstQum", Font.BOLD+Font.ITALIC, 15));
        ppr = new JTextField(20); ppr.setFont(new Font("mry_kacstQum", Font.BOLD + Font.ITALIC, 15));
-       psearch = new JTextField(20); psearch.setFont(new Font("mry_kacstQum", Font.BOLD + Font.ITALIC, 15));
        amount = new JTextField(20); amount.setFont(new Font("mry_kacstQum", Font.BOLD + Font.ITALIC, 15));
        balance = new JTextField(20); balance.setFont(new Font("mry_kacstQum", Font.BOLD + Font.ITALIC, 15));
        datetF = new JTextField(20); datetF.setFont(new Font("mry_kacstQum", Font.BOLD+Font.ITALIC, 15));
@@ -467,8 +466,10 @@ JPanel backpa = new JPanel();
        prodbtn.add(backmenu2);
 
        // Search
+       psearch = new TextHint("Product naame or product id");
+       psearch.setFont(new Font("mry_kacstQum", Font.PLAIN + Font.ITALIC, 15));
        psearch.setBackground(Color.white);
-       psearch.setFont(new java.awt.Font("Virtual DJ", 1, 18)); // NOI18N
+       //psearch.setFont(new java.awt.Font("Virtual DJ", 1, 18)); // NOI18N
        searchl.setFont(new Font("Virtual DJ", 1, 20));
        lasp.add(searchl);lasp.add(psearch);
        searchl.addActionListener(new ActionListener() {
@@ -519,7 +520,7 @@ JPanel backpa = new JPanel();
 
 
        //ORDER PANEL
-       ta.setText("\t Order View for Shoprite Supermarket \t\nShoprite Supermarket Order Receipt:");
+       ta.setText("\t Order View for Pegasus Supermarket \t\nPegasus Supermarket Order Receipt:");
        ta.setFont(new Font("BitStream Charter", 1, 15));
        JScrollPane ord = new JScrollPane(ta);
        orderpane.setLayout(new BorderLayout());
