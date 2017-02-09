@@ -15,3 +15,6 @@ Below is a markdown of how the image of the database looks like
 
 #Designs
 Well for the designs i would really appreciate some help in making it look nice.
+
+#NOTE:
+1) As of the time of upload there was no MVC implemented in this projects
