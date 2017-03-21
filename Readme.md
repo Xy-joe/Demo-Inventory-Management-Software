@@ -13,8 +13,9 @@ The Acces right ont the table is restricted in some areas o the receptionist/cas
 Below is a markdown of how the image of the database looks like
 ![](./resource/githu.png)
 
-## Designs
-Well for the designs i would really appreciate some help in making it look nice.
+## Designs and Interfaces
+Well for the designs i would really appreciate some help in making it look nice.For now though this is how the admin sectio looks like ![screenshot from 2017-03-21 03 36 28](https://cloud.githubusercontent.com/assets/12847386/24130273/dec2e84c-0de7-11e7-9899-e2c8966ed2ca.png)
+and the cashier interface looks like this ![screenshot from 2017-03-21 03 37 03](https://cloud.githubusercontent.com/assets/12847386/24130312/0af1e1f2-0de8-11e7-8b62-0397787b4e85.png)
 
 ## NOTE:
 1) As of the time of upload there was no MVC implemented in this projects
