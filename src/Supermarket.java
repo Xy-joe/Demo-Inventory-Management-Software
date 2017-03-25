@@ -1,3 +1,5 @@
+import contrllers.ImagePanel;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -7,17 +9,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 
-public class Supermarket {
+public class Supermarket implements ActionListener {
     JTabbedPane tpane;
   JPanel cost;
     final JPanel staff = new Staffclass().main;
-  JPanel prodf;
+  JPanel prodf, welcome, jPanel2,admintextfpanel,last, backpa;
     JFrame fame;
   JTable costomertable;
-    ImageIcon img;
+   private ImageIcon img;
+ImagePanel loader;
      JTable tab;
     double price = 0;
-
+    JButton pro,pri,backmenu, backmenu2, Searchbtn;
+    JTextArea ta = new JTextArea();
+    JPanel orderpane = new JPanel();
     public static void main(String[] joe) {
   EventQueue.invokeLater(new Runnable() {
      @Override
@@ -34,8 +39,7 @@ public class Supermarket {
 
     }
 
-        JTextArea ta = new JTextArea();
-    JPanel orderpane = new JPanel();
+
 
     private void retrieve(){
         DefaultTableModel dt  = new pgsConnect().supermaketDataretrival();
@@ -43,8 +47,9 @@ public class Supermarket {
     }
     JTextField datetF,prodID, prodname, prodprice, amount, balance, searchtf, pp, psearch, ppr,bcodetf, pq, sntf, bartf;
    public Supermarket() {
-       img = new ImageIcon();
-       img.getClass().getResource("resource/githu");
+
+      img = new ImageIcon("resource/pgs.jpg");
+      img.getImage();
        fame = new JFrame();
         fame.setBounds(400,400,1100,700);
       fame.setLocationRelativeTo(null);
@@ -52,45 +57,54 @@ public class Supermarket {
         fame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        fame.setLayout(new CardLayout(0,0));
        cost = new JPanel();
- final JTable jtab1;
+
        cost.setLayout(new BorderLayout());
        cost.setVisible(false);
 
 
        final JButton calc1 = new JButton("Calculate"),removeorder = new JButton("Remove Order"), calc = new JButton("Balance"), order = new JButton("Order"), purchase = new JButton("purchase"), searchl = new JButton("Find Product");
           // WELCOME SCREEN
-       JPanel imgpane = new JPanel();
-       imgpane.setLayout(new BorderLayout());
-       JLabel pg = new JLabel(img);
-          final JPanel welcome = new JPanel();
+          welcome = new JPanel();
           welcome.setLayout(new BorderLayout());
-         welcome.setBackground(Color.decode("#2a334f"));
+          welcome.setBackground(Color.decode("#CFD8DC"));
           welcome.setVisible(true);
-      JPanel menubtn = new JPanel();
-       menubtn.setLayout(new FlowLayout());
+          JPanel menubtn = new JPanel();
+          menubtn.setLayout(new FlowLayout());
 
-      menubtn.setBackground(Color.decode("#c3cad1"));
-          JButton pro = new JButton(" The Administrator");
-      pro.setBounds(79,100,100,79);
+       menubtn.setBackground(Color.decode("#c3cad1"));
+       pro = new JButton("Administrator");
+       pro.setBounds(79,100,100,79);
+        pro.addActionListener(this);
+       pro.setFont(new Font("Serif",Font.BOLD,20));
+       pro.setBackground(Color.decode("#1976D2"));//import java.awt.Color;
+      pro.setForeground(Color.WHITE);
+       pro.setFocusPainted(false);
+       pro.setBorderPainted(false);
 
-      JButton pri = new JButton(" The Cashier");
-       JLabel supname = new JLabel("PGS",JLabel.CENTER);
-       JLabel comme = new JLabel("licenced to everyday Supermarket",JLabel.RIGHT);
+       pri = new JButton("Cashier");
+       JLabel supname = new JLabel("PEGASUS INVENTORY MANAGEMENT SOFTWARE",JLabel.CENTER);
+       JLabel comme = new JLabel("licenced to shoprite Supermarket ",JLabel.RIGHT);
        comme.setFont(new Font("URW Chancery L", Font.ITALIC, 15));
-       comme.setForeground(Color.decode("#ffffff"));
-       supname.setFont(new Font("Liberation Serif", Font.BOLD,  55));
+       comme.setForeground(Color.blue);
+       supname.setFont(new Font("Liberation Serif", Font.BOLD,  50));
        supname.setForeground(Color.decode("#ffffff"));
-       supname.setBackground(Color.decode("#ffffff"));
+      // supname.setBackground(Color.decode("#ffffff"));
 
 
       pri.setBounds(79,79,100,79);
+       pri.setFont(new Font("Serif",Font.BOLD,20));
+       pri.setBackground(Color.decode("#1976D2"));//import java.awt.Color;
+       pri.setForeground(Color.WHITE);
+       pri.setFocusPainted(false);
+       pri.setBorderPainted(false);
+       pri.addActionListener(this);
        menubtn.add(pro);
       menubtn.add(pri);
-
-       imgpane.add(pg);
-       imgpane.add(menubtn, BorderLayout.SOUTH);
+       loader = new ImagePanel(new ImageIcon("resource/pg1.jpg").getImage());
+       loader.setLayout(new BorderLayout());
+       loader.add(menubtn, BorderLayout.SOUTH);
        welcome.add(supname, BorderLayout.NORTH);
-      welcome.add(imgpane, BorderLayout.CENTER);
+      welcome.add(loader,BorderLayout.CENTER);
        welcome.add(comme, BorderLayout.SOUTH);
 
 
@@ -154,15 +168,14 @@ esp.printStackTrace();
        });
 
        JScrollPane maintable = new JScrollPane(costomertable);
-        final JPanel jPanel2 = new JPanel();
-        jPanel2.setBackground(Color.decode("#202020"));
+        jPanel2 = new JPanel();
+        jPanel2.setBackground(Color.decode("#0288D1"));
         jPanel2.setLayout(new FlowLayout(10, 10, 10));
-        final JPanel admintextfpanel = new JPanel();
+       admintextfpanel = new JPanel();
         admintextfpanel.setLayout(new GridLayout(6, 2));
-        admintextfpanel.setBackground(Color.decode("#202020"));
-      final JButton backmenu, backmenu2, Searchbtn;
+        admintextfpanel.setBackground(Color.decode("#0288D1"));
         JButton addrow2btn = new JButton();
-        addrow2btn.setBackground(Color.decode("#fd9901"));
+        addrow2btn.setBackground(Color.decode("#303F9F"));
         addrow2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
        addrow2btn.setForeground(Color.WHITE);
         addrow2btn.setText("Add New Product");
@@ -187,7 +200,7 @@ esp.printStackTrace();
         });
         jPanel2.add(addrow2btn);
         JButton save2btn = new JButton();
-        save2btn.setBackground(Color.decode("#fd9901"));
+        save2btn.setBackground(Color.decode("#303F9F"));
         save2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
        save2btn.setForeground(Color.WHITE);
         save2btn.setText("Update");
@@ -216,7 +229,7 @@ esp.printStackTrace();
         });
         jPanel2.add(save2btn);
        JButton delete2btn = new JButton();
-       delete2btn.setBackground(Color.decode("#fd9901"));
+       delete2btn.setBackground(Color.decode("#303F9F"));
        delete2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
        delete2btn.setForeground(Color.WHITE);
        delete2btn.setText("Delete Product");
@@ -253,7 +266,7 @@ esp.printStackTrace();
         searchtf.setBackground(Color.white);
         searchtf.setFont(new java.awt.Font("Virtual DJ", 1, 19)); // NOI18N
          Searchbtn = new JButton("Find Product");
-       Searchbtn.setBackground(Color.decode("#fd9901"));
+       Searchbtn.setBackground(Color.decode("#303F9F"));
        Searchbtn.setFont(new Font("Virtual DJ", 1, 19));
        Searchbtn.setForeground(Color.WHITE);
        jPanel2.add(Searchbtn);
@@ -299,8 +312,9 @@ esp.printStackTrace();
            }
        });
 
-JPanel backpa = new JPanel();
+      backpa = new JPanel();
       backmenu = new JButton("Back");
+       backmenu.addActionListener(this);
       backpa.add(backmenu);
        sntf.setBackground(Color.decode("#ffffff"));
        datetF.setBounds(10, 10, 25, 5);
@@ -330,11 +344,13 @@ JPanel backpa = new JPanel();
 
        bcodetf.setBackground(Color.decode("#ffffff"));
        JButton bacode = new JButton("Generate Code");
-       bacode.setBackground(Color.decode("#ffaa00"));
-       bacode.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
-       bacode.setForeground(Color.black);
-
-       admintextfpanel.add(bacode);admintextfpanel.add(bcodetf);
+       bacode.setBackground(Color.decode("#303F9F"));
+       bacode.setFont(new Font("Serif", 1, 20)); // NOI18N
+       bacode.setForeground(Color.WHITE);
+      bacode.setBounds(79,79,100,80);
+     bacode.setFocusPainted(false);
+       bacode.setBorderPainted(false);
+       admintextfpanel.add(bacode,BorderLayout.CENTER);admintextfpanel.add(bcodetf);
 
 
        prodname.setBackground(Color.decode("#ffffff"));
@@ -354,7 +370,7 @@ JPanel backpa = new JPanel();
        jLabel4.setText("Price");
        admintextfpanel.add(jLabel4);admintextfpanel.add(prodprice);
 
-     final  JPanel last = new JPanel();
+       last = new JPanel();
        last.setLayout(new BorderLayout());
        last.add(admintextfpanel, BorderLayout.CENTER);
        last.add(backpa, BorderLayout.SOUTH);
@@ -464,6 +480,7 @@ JPanel backpa = new JPanel();
 
        backmenu2 = new JButton("Back");
        prodbtn.add(backmenu2);
+       backmenu2.addActionListener(this);
 
        // Search
        psearch = new TextHint("Product naame or product id");
@@ -651,102 +668,70 @@ JOptionPane.showMessageDialog(null, "Done Printing");
 
            }
        });
-           pro.addActionListener(new
 
-           ActionListener() {
-               @Override
-               public void actionPerformed (ActionEvent actionEvent){
-
-                   String pass = JOptionPane.showInputDialog("Enter your PassWord ");
-
-                   if (pass.equalsIgnoreCase("Admin")) {
-                       tpane.add("Products", cost);
-                       tpane.add("Staff table", staff);
-                       tpane.setVisible(true);
-                       welcome.setVisible(false);
-                   } else {
-                       JOptionPane.showMessageDialog(null, "Incorrect password");
-                       return;
-                   }
-
-               }
-           }
-
-           );
-           // Panel Menu
-
-           pri.addActionListener(new
-
-           ActionListener() {
-               @Override
-               public void actionPerformed (ActionEvent actionEvent){
-
-
-                   String recepname = JOptionPane.showInputDialog("User Name: ", "Linda");
-                   String RecepID = JOptionPane.showInputDialog("StaffID: ");
-
-                   if (recepname.equalsIgnoreCase(recepname)) {
-                       prodf.setVisible(true);
-                       welcome.setVisible(false);
-
-                   } else if (recepname.equalsIgnoreCase(null)) {
-                       JOptionPane.showMessageDialog(null, " No name entered please enter a name");
-                       return;
-                   } else {
-                       JOptionPane.showMessageDialog(null, " No name entered please enter a name");
-                       return;
-                   }
-               }
-           }
-
-           );
-
-           backmenu.addActionListener(new
-
-           ActionListener() {
-               @Override
-               public void actionPerformed (ActionEvent actionEvent){
-                   cost.setVisible(false);
-                   welcome.setVisible(true);
-                   jPanel2.setVisible(false);
-                   admintextfpanel.setVisible(false);
-                   last.setVisible(false);
-
-               }
-           }
-
-           );
-           backmenu2.addActionListener(new
-
-           ActionListener() {
-               @Override
-               public void actionPerformed (ActionEvent actionEvent){
-                   prodf.setVisible(false);
-                   welcome.setVisible(true);
-               }
-           }
-
-           );
 
 
        prodf.add(lasp, BorderLayout.NORTH);
        prodf.add(main,BorderLayout.CENTER );
        prodf.add(orderpane, BorderLayout.EAST);
        prodf.add(las, BorderLayout.SOUTH);
-           fame.add(welcome);
-           fame.getContentPane().
+           fame.getContentPane().add(welcome);
+           fame.getContentPane().add(cost);
+          fame.getContentPane(). add(prodf);
 
-           add(cost);
 
-           fame.getContentPane().
-
-           add(prodf);
-
-           fame.add(tpane);
+       tpane.add("Products", cost);
+       tpane.add("Staff table", staff);
+           fame.getContentPane().add(tpane);
 
 
        }
 
+// Handling Action events listeners
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object src = e.getSource();
+        if (src == pro){
+            JPasswordField pwd = new JPasswordField(15);
 
+            int option =   JOptionPane.showConfirmDialog(null, pwd,"Enter administrator Password",JOptionPane.OK_CANCEL_OPTION);
+
+            if (option == 0 ) {
+                char[] pass = pwd.getPassword();
+                String passString = new String(pass);
+                if (passString.equalsIgnoreCase("Admin")){
+                    tpane.setVisible(true);
+                    welcome.setVisible(false);
+
+                } else
+                {
+                    JOptionPane.showMessageDialog(null, "Incorrect password");
+                }
+            }
+        }
+        else if (src == pri){
+
+            String recepname = JOptionPane.showInputDialog(null,"User Name: ", "Username");
+            String RecepID = JOptionPane.showInputDialog("StaffID: ");
+
+            if (recepname.equalsIgnoreCase(recepname)) {
+                prodf.setVisible(true);
+                welcome.setVisible(false);
+
+            } else if (recepname.equalsIgnoreCase(null)) {
+                JOptionPane.showMessageDialog(null, " No name entered please enter a name");
+            } else {
+                JOptionPane.showMessageDialog(null, " No name entered please enter a name");
+            }
+        }
+        else if (src == backmenu) {
+            welcome.setVisible(true);
+            tpane.setVisible(false);
+        }
+        else if (src == backmenu2){
+            prodf.setVisible(false);
+            welcome.setVisible(true);
+        }
     }
+}
 
