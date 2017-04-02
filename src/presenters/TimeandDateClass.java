@@ -1,9 +1,13 @@
+package presenters;
+
 import javax.swing.*;
 import java.util.Date;
 
 public class TimeandDateClass {
 
-    JTextPane pane; String output; String date;
+    JTextPane pane;
+    public String output;
+    public String date;
     public TimeandDateClass() {
         // Obtain the total milliseconds since the midnight, Jan 1, 1970
         long totalMilliseconds = System.currentTimeMillis();

@@ -1,3 +1,8 @@
+package views;
+
+import presenters.StaffConnection;
+import presenters.productconnections;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -7,60 +12,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 
-public class Staffclass {
-    JPanel staff;
+public class Staffclass extends JFrame implements ActionListener{
+    JPanel staff,backpanel;
     JTable staftab;
     JTextField sntf, fnametf, stafID, gentf, postf, phon, addre, searchtf;
     JPanel main = new JPanel();
+    JButton backbut;
 
-    private void retrieve(){
-        DefaultTableModel dt  = new pgsConnect().supermaketDataretrival();
+    public void retrieve(){
+        DefaultTableModel dt  = new StaffConnection().staffDataretrival();
         staftab.setModel(dt);
     }
 
     public  Staffclass(){
         final DefaultTableModel costomermodel = new StaffConnection().adminStaff();
         staftab = new JTable(costomermodel);
-        staftab.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                double prodid = 0;
-                String prodidm = Double.toString(prodid);
-                try {
-                    int row = staftab.getSelectedRow();
-                    String onclick = (staftab.getModel().getValueAt(row, 0).toString());
-                    String sql = "SELECT * FROM Supermarket.Staff_Table  WHERE STAFF_ID = '" + onclick + "' ";
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
-                    Statement stmt = con.prepareStatement(sql);
-                    ResultSet rs = stmt.executeQuery(sql);
-
-                    if (rs.next()) {
-                        String add0 = rs.getString("SURNAME");
-                        String add1 = rs.getString("FIRSTNAME");
-                        String add2 = rs.getString("STAFF_ID");
-                        String add3 = rs.getString("GENDER");
-                        String add4 = rs.getString("POSITIONS");
-                        String add5 = rs.getString("PHONE_NUMBER");
-                        String add6 = rs.getString("ADDRESS");
-
-                        sntf.setText(add0);
-                        fnametf.setText(add1);
-                        stafID.setText(add2);
-                        gentf.setText(add3);
-                        postf.setText(add4);
-                        phon.setText(add5);
-                        addre.setText(add6);
-
-
-                    }
-                } catch (SQLException esp) {
-                    JOptionPane.showMessageDialog(null, "Something Went wrong");
-                    esp.printStackTrace();
-                }
-            }
-        });
-
         staff = new JPanel();
         sntf = new JTextField(25);
         fnametf = new JTextField(25);
@@ -74,7 +40,7 @@ public class Staffclass {
         JScrollPane maintable = new JScrollPane(staftab);
         JPanel jPanel2 = new JPanel();
         jPanel2.setBackground(Color.decode("#2a334f"));
-        jPanel2.setLayout(new FlowLayout(10, 10, 10));
+        jPanel2.setLayout(new FlowLayout(FlowLayout.CENTER));
         final JPanel admintextfpanel = new JPanel();
         admintextfpanel.setLayout(new GridLayout(7, 2));
         admintextfpanel.setBackground(Color.decode("#2a334f"));
@@ -84,27 +50,8 @@ public class Staffclass {
         addrow2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
         addrow2btn.setForeground(Color.WHITE);
         addrow2btn.setText("Add New Staff");
-        addrow2btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (new StaffConnection().staffadd(sntf.getText(), fnametf.getText(), stafID.getText(), gentf.getText(), postf.getText(), phon.getText(), addre.getText())) {
-                    JOptionPane.showMessageDialog(null, "Successfully Added");
 
-                    sntf.setText("");
-                    fnametf.setText("");
-                    stafID.setText("");
-                    gentf.setText("");
-                    postf.setText("");
-                    phon.setText("");
-                    addre.setText("");
 
-                    retrieve();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Not Added");
-                }
-
-            }
-        });
-        jPanel2.add(addrow2btn);
         JButton save2btn = new JButton();
         save2btn.setBackground(Color.decode("#fd9901"));
         save2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
@@ -114,7 +61,7 @@ public class Staffclass {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 int index = staftab.getSelectedRow();
                 String date = staftab.getValueAt(index, 0).toString();
-                if (new StaffConnection().staffUpdate(sntf.getText(), fnametf.getText(), stafID.getText(), gentf.getText(), postf.getText(), phon.getText(), addre.getText())) {
+                if (new StaffConnection().staffUpdate(sntf.getText(),sntf.getText(), fnametf.getText(), stafID.getText(), gentf.getText(), postf.getText(), phon.getText(), addre.getText(),addre.getText())) {
                     JOptionPane.showMessageDialog(null, "Successfully Updated");
 
 
@@ -136,7 +83,6 @@ public class Staffclass {
 
             }
         });
-        jPanel2.add(save2btn);
         JButton delete2btn = new JButton();
         delete2btn.setBackground(Color.decode("#fd9901"));
         delete2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
@@ -153,7 +99,7 @@ public class Staffclass {
                     int index = staftab.getSelectedRow();
                     String date = staftab.getValueAt(index, 0).toString();
 
-                    if (new pgsConnect().supermarketdelete(date))
+                    if (new productconnections().supermarketdelete(date))
                         JOptionPane.showMessageDialog(null, "Deleted Successfully ");
 
                     sntf.setText("");
@@ -172,11 +118,10 @@ public class Staffclass {
             }
 
         });
-        jPanel2.add(delete2btn);
         searchtf = new JTextField(10);
         searchtf.setBackground(Color.white);
         searchtf.setFont(new java.awt.Font("Virtual DJ", 1, 19)); // NOI18N
-        Searchbtn = new JButton("Search");
+        Searchbtn = new JButton("Find Staff");
         Searchbtn.setBackground(Color.decode("#fd9901"));
         Searchbtn.setFont(new Font("Virtual DJ", 1, 19));
         Searchbtn.setForeground(Color.WHITE);
@@ -254,14 +199,29 @@ public class Staffclass {
         jLabel4.setText("Address");
         admintextfpanel.add(jLabel5);admintextfpanel.add(addre);
 
-        JPanel last = new JPanel();
-        last.setLayout(new BorderLayout());
-        last.add(admintextfpanel, BorderLayout.CENTER);
-        staff.add(jPanel2, BorderLayout.NORTH);
-        staff.add(maintable, BorderLayout.CENTER);
-        staff.add(last, BorderLayout.SOUTH);
-        main.setLayout(new BorderLayout());
-        main.setBackground(Color.decode("#044c04"));
-        main.add(staff, BorderLayout.CENTER);
+        backpanel = new JPanel(new BorderLayout());
+        backbut = new JButton("Back");
+        backbut.addActionListener(this);
+        backpanel.add(backbut,BorderLayout.CENTER);
+
+        setLayout(new BorderLayout());
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setSize(800,500);
+        setTitle("Staff Table");
+       add(jPanel2, BorderLayout.NORTH);
+        add(maintable, BorderLayout.CENTER);
+        add(backpanel, BorderLayout.SOUTH);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object src = e.getSource();
+        if (src == backbut){
+            new Supermarket().mainadmin.getContentPane().add(new Supermarket().cost).setVisible(true);
+            new Supermarket().welcome.setVisible(false);
+            setVisible(false);
+        }
     }
 }

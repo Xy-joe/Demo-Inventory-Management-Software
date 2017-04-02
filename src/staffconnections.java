@@ -2,9 +2,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
-public class connectionclass {
+public class staffconnections {
 
-    public connectionclass() {
+    public staffconnections() {
 
 
         Connection con = null;
@@ -18,7 +18,7 @@ public class connectionclass {
             Class.forName("com.mysql.jdbc.Driver");
 
 
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
 
             stmt = con.createStatement();
             System.out.println("Connection Established");
@@ -53,7 +53,7 @@ public class connectionclass {
         //SQL STATEMENT
         String sql = "INSERT INTO  Supermarket.NFCSTableStaff(S_N, FIRSTNAME, LASTNAME, GENDER, DEPARTMENT, OFFICEOCCUPIED, SODALITY,  DATEOFBIRTH, PARISH, PHONENUMBER, EMAIL, STATEOFORIGIN) VALUES ('" + sn + "','" + fn + "', '" + ln + "', '" + ge + "', '" + dep + "', '" + offi + "', '" + soda + "', '" + dob + "', '" + par + "', '" + pn + "', '" + emai + "', '" + soo + "')";
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
             Statement st = con.prepareStatement(sql);
 
             st.execute(sql);
@@ -88,7 +88,7 @@ public class connectionclass {
         // SQL Statement
         String st = "SELECT * FROM Supermarket.NfcsStudenttable";
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
             Statement ss = con.prepareStatement(st);
             ResultSet rr = ss.executeQuery(st);
 
@@ -141,7 +141,7 @@ public class connectionclass {
         // SQL Statement
         String st = "SELECT * FROM Supermarket.NFCSTableStaff";
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
             Statement ss = con.prepareStatement(st);
             ResultSet rr = ss.executeQuery(st);
 
@@ -179,7 +179,7 @@ public class connectionclass {
         String sql = "UPDATE Supermarket.NFCSTableStaff SET FIRSTNAME='" + fn + "', LASTNAME='" + ln + "',GENDER='" + ge + "', DEPARTMENT='" + dep + "',OFFICEOCCUPIED='" + offi + "', SODALITY='" + soda + "', DATEOFBIRTH='" + dob + "', PHONENUMBER='" + pn + "', EMAIL='" + emai + "', PARISH='" + par + "',STATEOFORIGIN='" + soo + "'  WHERE S_N ='" + sn + "'  ";
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
 
             Statement stmt = con.prepareStatement(sql);
             stmt.execute(sql);
@@ -197,7 +197,7 @@ public class connectionclass {
         String sql = "DELETE FROM Supermarket.NFCSTableStaff WHERE S_N='" + sn + "'";
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
             Statement stmt = con.prepareStatement(sql);
             stmt.execute(sql);
             return true;

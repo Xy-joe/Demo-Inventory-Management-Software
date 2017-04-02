@@ -1,4 +1,4 @@
-package contrllers;
+package presenters;
 
 import java.awt.Graphics;
 import java.awt.Image;

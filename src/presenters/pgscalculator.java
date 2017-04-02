@@ -1,3 +1,5 @@
+package presenters;
+
 import javax.swing.*;
 import java.sql.*;
 
@@ -15,7 +17,7 @@ public class pgscalculator {
             Class.forName("com.mysql.jdbc.Driver");
 
 
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
 
             stmt = con.createStatement();
             System.out.println("Connection Established");
@@ -48,7 +50,7 @@ public class pgscalculator {
 
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
             Statement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery(sql);
             return true;
@@ -65,7 +67,7 @@ public Boolean balanceprice(double bal, double price){
 
 
     try {
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/views.Supermarket", "root", "joe9ty");
         Statement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery(sql);
         return true;

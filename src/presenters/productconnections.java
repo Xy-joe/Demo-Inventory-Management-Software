@@ -1,8 +1,10 @@
+package presenters;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
-public class pgsConnect {
+public class productconnections {
     public DefaultTableModel supermarketadminconnect() {
         DefaultTableModel dt = new DefaultTableModel();
         dt.addColumn("S/N");
@@ -11,6 +13,7 @@ public class pgsConnect {
         dt.addColumn("Barcode");
         dt.addColumn("Product");
         dt.addColumn("Price");
+        dt.addColumn("Stock");
 
         // SQL Statement
         String st = "SELECT * FROM Supermarket.Products";
@@ -21,13 +24,15 @@ public class pgsConnect {
 
             while (rr.next()) {
 
-                int id = rr.getInt(1);String sn = Integer.toString(id);int ID = rr.getInt(2); String produID = Integer.toString(ID);
+                int id = rr.getInt(1);String sn = Integer.toString(id);
+                int ID = rr.getInt(2); String produID = Integer.toString(ID);
                 String date = rr.getString(3);
                 String bcode = rr.getString(4);
                 String prod = rr.getString(5);
                 double pd = rr.getDouble(6); String price = Double.toString(pd);
+                int stock_no = rr.getInt(7); String stock = Integer.toString(stock_no);
 
-                dt.addRow(new String[]{sn,produID, date,bcode, prod, price});
+                dt.addRow(new String[]{sn,produID, date,bcode, prod, price, stock});
             }
             return dt;
 
@@ -43,6 +48,7 @@ public class pgsConnect {
         dt.addColumn("ProductID");
         dt.addColumn("Product");
         dt.addColumn("Price");
+        dt.addColumn("Stock");
 
         // SQL Statement
         String st = "SELECT * FROM Supermarket.Products";
@@ -57,8 +63,10 @@ public class pgsConnect {
                 String produID = rr.getString(3);
                 String prod = rr.getString(5);
                 String price = rr.getString(6);
+                int stock_no = rr.getInt(7); String stock = Integer.toString(stock_no);
 
-                dt.addRow(new String[]{sn,produID,prod, price});
+
+                dt.addRow(new String[]{sn,produID,prod, price, stock});
             }
             return dt;
 
@@ -67,16 +75,36 @@ public class pgsConnect {
         }
         return null;
     }
-    public  Boolean supermarketadd(String sn, String date, String prodID, String bcode, String prod, String price){
+    public  Boolean supermarketadd(String sn, String date, String prodID, String bcode, String prod, String price, String stock){
 
-        String sql = "INSERT INTO Supermarket.Products(S_N, Date, ProductID, Barcode, Product, Price) VALUES('"+sn+"','"+date+"','"+prodID+"', '"+bcode+"', '"+prod+"', '"+price+"')";
+        String sql = "INSERT INTO Supermarket.Products(S_N, Date, ProductID, Barcode, Product, Price, Stock) VALUES('"+sn+"','"+date+"','"+prodID+"', '"+bcode+"', '"+prod+"', '"+price+"','"+stock+"')";
 
         try{
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
             Statement ss = con.prepareStatement(sql);
-
-            ss.execute(sql);
-            return (true);
+            if (bcode.equals(null)){
+                JOptionPane.showMessageDialog(null,"Barcode field is empty");
+                return true;
+            }
+            if (prodID.equals(null)){
+                JOptionPane.showMessageDialog(null,"Product ID field is empty");
+                return true;
+            }
+            if (prod.equals(null)){
+                JOptionPane.showMessageDialog(null,"Product field is empty");
+                return true;
+            }
+            if (price.equals(null)){
+                JOptionPane.showMessageDialog(null,"Price field is empty");
+                return true;
+            }
+            if (bcode.equals(null)){
+                JOptionPane.showMessageDialog(null,"Stock field is empty");
+                return true;
+            }else {
+                ss.execute(sql);
+                return (true);
+            }
         }catch (SQLException es){
             JOptionPane.showMessageDialog(null, "Some fields have been incorrectly entered");
             es.printStackTrace();
@@ -93,6 +121,7 @@ public class pgsConnect {
         dt.addColumn("Barcode");
         dt.addColumn("Product");
         dt.addColumn("Price");
+        dt.addColumn("Stock");
 
 
         // SQL Statement
@@ -114,9 +143,10 @@ public class pgsConnect {
                 String bcode = rr.getString(4);
                 String prod = rr.getString(5);
                 double pr = rr.getDouble(6);String price = Double.toString(pr);
+                int stock_no = rr.getInt(7); String stock = Integer.toString(stock_no);
 
 
-                dt.addRow(new String[]{sn, date, idm,bcode, prod, price});
+                dt.addRow(new String[]{sn, date, idm,bcode, prod, price,stock});
             }
 
             return dt;
@@ -126,14 +156,35 @@ public class pgsConnect {
         }
         return null;
     }
-    public Boolean supermarketUpdate(String sn, String date, String prodid,String bcode, String prod, String price ){
-        String sql = "UPDATE Supermarket.Products SET Date = '" + date+"', ProductID = '"+ prodid+"',Barcode = '"+bcode+"' ,Product=  '"+prod+"',Price = '"+price+"' WHERE S_N = '" + sn+"'";
+    // Update Product  Method
+    public Boolean supermarketUpdate(String sn, String date, String prodid,String bcode, String prod, String price, String stock ){
+        String sql = "UPDATE Supermarket.Products SET Date = '" + date+"', ProductID = '"+ prodid+"',Barcode = '"+bcode+"' ,Product=  '"+prod+"',Price = '"+price+"',Stock =  '"+stock+"' WHERE S_N = '" + sn+"'";
         try{
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
-            Statement stmt = con.prepareStatement(sql);
-            stmt.execute(sql);
-            return true;
-
+            if (bcode.equals("")){
+                JOptionPane.showMessageDialog(null,"Barcode field is empty");
+                return true;
+            }
+            if (prodid.equals("")){
+                JOptionPane.showMessageDialog(null,"Product ID field is empty");
+                return true;
+            }
+            if (prod.equals("")){
+                JOptionPane.showMessageDialog(null,"Product field is empty");
+                return true;
+            }
+            if (price.equals("")){
+                JOptionPane.showMessageDialog(null,"Price field is empty");
+                return true;
+            }
+            if (bcode.equals("")){
+                JOptionPane.showMessageDialog(null,"Stock field is empty");
+                return true;
+            }else {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+                Statement stmt = con.prepareStatement(sql);
+                stmt.execute(sql);
+                return true;
+            }
 
         }catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "Server Error");
@@ -141,9 +192,8 @@ public class pgsConnect {
             return  false;
         }
     }
+    // Search method for the Products
     public Boolean supermarketsearch(String prod, String bcode){
-
-
     String sql ="SELECT *  FROM Supermarket.Products WHERE Barcode = '"+bcode+"' OR Product = '"+prod+"'";
     try{
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
@@ -157,6 +207,7 @@ public class pgsConnect {
 
         return null;
     }}
+    // Delete Method for the Products
     public Boolean supermarketdelete(String sn){
         String sql = "DELETE FROM Supermarket.Products WHERE S_N ='" + sn + "'";
 
@@ -171,12 +222,6 @@ public class pgsConnect {
         }
 
     }
-
-    // CONNECTIONS FOR THE STAFF TABLE
-
-
-
-
 }
 
 

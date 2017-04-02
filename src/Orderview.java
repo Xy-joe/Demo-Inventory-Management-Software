@@ -33,7 +33,7 @@ public class Orderview extends JApplet {
 
                 String pr = nwww.getText();String fos = nww3.getText();
                 String price =  nww1.getText();String payed = nww2.getText();
-                printarea.append("\n\n Shoprite Supermarket Order Receipt: \n\n" +price+":\t\t" +
+                printarea.append("\n\n Shoprite views.Supermarket Order Receipt: \n\n" +price+":\t\t" +
                         " "+ pr+"\t\t"+fos+"\n\n Thanks for Patronising us\n see you again soon" );
 
                 JOptionPane.showMessageDialog(null, "Successfullly Ordered");
@@ -55,7 +55,7 @@ public class Orderview extends JApplet {
     }
     public boolean orderNow(String prod, String qty, double price){
       try {
-          printarea.append("\n\n Shoprite Supermarket Order Receipt: \n\n" + prod + ":\t\t" +
+          printarea.append("\n\n Shoprite views.Supermarket Order Receipt: \n\n" + prod + ":\t\t" +
                   " " + qty + "\t\t" + price + "\n\n Thanks for Patronising us\n see you again soon");
 
       }catch (Exception js){
