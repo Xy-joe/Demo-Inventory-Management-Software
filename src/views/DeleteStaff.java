@@ -1,34 +1,63 @@
 package views;
 
 import presenters.StaffConnection;
-import presenters.productconnections;
+import presenters.TextHint;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 /**
- * Created by joebuntu on 4/1/17.
+ * Created by joebuntu on 4/2/17.
  */
-public class AddStaff extends JFrame implements ActionListener {
-JPanel mainp,header,body,button;
-JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,date;
-    JTextField stsntf,stafsnatf,staffnatf, stafidtf,stafpositf,stafphontf,staffgentf,stafadrestf,datetf;
-    JButton isert,refresh, back;
-    public AddStaff()  {
+public class DeleteStaff extends JFrame implements ActionListener{
+    JPanel mainp,header,body,button,searchpa;
+
+    JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,date;
+    JTextField stsntf,stafsnatf,staffnatf, stafidtf,stafpositf,stafphontf,staffgentf,stafadrestf,searchtf,datetf;
+    JButton isert,refresh, back, search;
+
+    public DeleteStaff() throws HeadlessException {
+        searchpa = new JPanel(new GridLayout(1,2));
+        searchpa.setBackground(Color.decode("#F44336"));
+        search = new JButton("Search for Staff");
+        search.setForeground(Color.WHITE);
+        search.setBackground(Color.decode("#e57373"));
+        search.addActionListener(this);
+        searchpa.setSize(500,60);
+        searchtf = new TextHint("Enter Staff Id here ");
+        searchtf.setBackground(Color.WHITE);
+        searchtf.setFont(new Font("Liberation Serif", Font.BOLD,  18));
+        searchtf.setForeground(Color.black);
+        searchpa.add(search);
+        searchpa.add(searchtf);
+
         header = new JPanel(new FlowLayout());
-        header.setBackground(Color.decode("#009688"));
+        header.setBackground(Color.decode("#00BCD4"));
         ImageIcon img = new ImageIcon("resource/adsta.png");
         img.getImage();
         headl = new JLabel(img);
-        headl.setText("Add Staff");
+        headl.setText("Delete Staff");
         headl.setFont(new Font("Liberation Serif", Font.PLAIN,  32));
         headl.setForeground(Color.WHITE);
         header.add(headl);
-        body = new JPanel(new GridLayout(8,2));
-        body.setBackground(Color.decode("#B2DFDB"));
+        header.add(searchpa);
+        body = new JPanel(new GridLayout(9,2));
+        body.setBackground(Color.decode("#FFCDD2"));
+
+        stsn = new JLabel();
+        stsn.setForeground(Color.black);
+        stsn.setFont(new Font("Liberation Serif", Font.PLAIN,  20));
+        stsn.setText("Serial no:");
+        stsntf = new JTextField(25);
+        stsntf.setBackground(Color.WHITE);
+        stsntf.setFont(new Font("Liberation Serif", Font.PLAIN,  18));
+        stsntf.setForeground(Color.black);
+        body.add(stsn);
+        body.add(stsntf);
 
 
         stafsna = new JLabel();
@@ -120,30 +149,30 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
         body.add(datetf);
 
         button = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        button.setBackground(Color.decode("#004d40"));
-        isert = new JButton("Insert");
-        isert.setBackground(Color.decode("#00796b"));
-        isert.setForeground(Color.WHITE);
+        button.setBackground(Color.decode("#b71c1c"));
+        isert = new JButton("Delete");
+        isert.setBackground(Color.decode("#e57373"));
+        isert.setForeground(Color.BLACK);
         isert.addActionListener(this);
         refresh = new JButton("Refresh");
-        refresh.setBackground(Color.decode("#00796B"));
-        refresh.setForeground(Color.WHITE);
+        refresh.setBackground(Color.decode("#e57373"));
+        refresh.setForeground(Color.BLACK);
         refresh.addActionListener(this);
         back = new JButton("Back");
-        back.setBackground(Color.decode("#00796B"));
-        back.setForeground(Color.WHITE);
+        back.setBackground(Color.decode("#e57373"));
+        back.setForeground(Color.BLACK);
         back.addActionListener(this);
         button.add(isert);button.add(refresh);button.add(back);
         mainp = new JPanel(new BorderLayout());
-        mainp.add(header, BorderLayout.NORTH);
+        mainp.add(searchpa, BorderLayout.NORTH);
         mainp.add(body, BorderLayout.CENTER);
         mainp.add(button, BorderLayout.SOUTH);
         add(mainp,BorderLayout.CENTER);
 
-        setSize(400,410);
+        setSize(500,430);
+        setTitle("Remove Staff");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setTitle("Add New Staff");
         setResizable(false);
         setVisible(true);
         setLayout(new BorderLayout());
@@ -151,32 +180,37 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    Object src = e.getSource();
+        Object src = e.getSource();
         if(src == back){
             dispose();
             setVisible(false);
         }
         else if (src == isert){
-            if (new StaffConnection().staffadd(stafsnatf.getText(), staffnatf.getText(), stafidtf.getText(),
-                    staffgentf.getText(), stafpositf.getText(), stafphontf.getText(), stafadrestf.getText(),datetf.getText())) {
-                JOptionPane.showMessageDialog(null, "Successfully Added");
+            int option = JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Staff information completely \n NOTE: Once deleted, the details " +
+                    "are no longer available","Confirm Deletion",JOptionPane.YES_NO_OPTION);
+            if (option == 0) {
+                if (new StaffConnection().staffDeletion(stsntf.getText())) {
+                    JOptionPane.showMessageDialog(null, "Deleted");
 
-                stafsnatf.setText("");
-                staffnatf.setText("");
-                stafidtf.setText("");
-                staffgentf.setText("");
-                stafpositf.setText("");
-                stafphontf.setText("");
-                stafadrestf.setText("");
-                datetf.setText("");
+                    stsntf.setText("");
+                    stafsnatf.setText("");
+                    staffnatf.setText("");
+                    stafidtf.setText("");
+                    staffgentf.setText("");
+                    stafpositf.setText("");
+                    stafphontf.setText("");
+                    stafadrestf.setText("");
+                    datetf.setText("");
 
-                retrieve();
+                    retrieve();
+                }
+            }else {
+                JOptionPane.showMessageDialog(null,"Cancelled");
             }
-        }
-        else if (src == refresh){
+        } else if (src == refresh){
             stsntf.setText("");
             stafsnatf.setText("");
-            staffgentf.setText("");
+            staffnatf.setText("");
             stafidtf.setText("");
             staffgentf.setText("");
             stafpositf.setText("");
@@ -184,8 +218,48 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
             stafadrestf.setText("");
             datetf.setText("");
         }
+        else if (src == search){
+            String val = searchtf.getText();
+            String sql = "SELECT *  FROM Supermarket.Staff_Table WHERE STAFF_ID = '" + val + "'";
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+                PreparedStatement stmt = con.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery(sql);
+
+                if (rs.first()){
+                    String val1 = rs.getString("Serial_No");
+                    String add0 = rs.getString("SURNAME");
+                    String add1 = rs.getString("FIRSTNAME");
+                    String add5 = rs.getString("PHONE_NUMBER");
+                    String add2 = rs.getString("STAFF_ID");
+                    String add3 = rs.getString("GENDER");
+                    String add4 = rs.getString("OFFICE");
+                    String val2 = rs.getString("ADDRESS");
+                    String gis = rs.getString("Date_Of_Appiontment");
+
+
+                    stsntf.setText(val1);
+                    stafsnatf.setText(add0);
+                    staffgentf.setText(add3);
+                    stafidtf.setText(add2);
+                    staffnatf.setText(add1);
+                    stafpositf.setText(add4);
+                    stafphontf.setText(add5);
+                    stafadrestf.setText(val2);
+                    datetf.setText(gis);
+                }else {
+                    JOptionPane.showMessageDialog(null, "Search Connection Problem");
+                }
+
+            } catch (SQLException es) {
+                JOptionPane.showMessageDialog(null, "The code is either incorrect or \n does not exist in our database ");
+                es.printStackTrace();
+
+            }
     }
-    private void retrieve(){
-         new Staffclass().retrieve();
+    }
+    public void retrieve(){
+        DefaultTableModel dt  = new StaffConnection().staffDataretrival();
+        new Staffclass().staftab.setModel(dt);
     }
 }

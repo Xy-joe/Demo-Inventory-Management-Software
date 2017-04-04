@@ -113,7 +113,7 @@ public class NewProduct extends JFrame  {
         addbtn.setText("Add New Product");
         addbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                if (new productconnections().supermarketadd(sntf.getText(), datetF.getText(), prodID.getText(), bcodetf.getText(), prodname.getText(), prodprice.getText(),stock.getText())) {
+                if (new productconnections().supermarketadd( datetF.getText(), prodID.getText(), bcodetf.getText(), prodname.getText(), prodprice.getText(),stock.getText())) {
                     JOptionPane.showMessageDialog(null, "Successfully Added");
 
                     sntf.setText("");

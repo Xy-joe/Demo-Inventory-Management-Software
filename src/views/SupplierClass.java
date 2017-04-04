@@ -1,129 +1,54 @@
 package views;
 
-import presenters.StaffConnection;
-import presenters.productconnections;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import presenters.TextHint;
+import presenters.supplierconnections;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.*;
 
-public class Staffclass extends JFrame implements ActionListener{
+public class SupplierClass extends JFrame implements ActionListener {
     JPanel staff,backpanel;
-    JTable staftab;
+    JTable suppliertable;
     JTextField sntf, fnametf, stafID, gentf, postf, phon, addre, searchtf;
     JPanel main = new JPanel();
     JButton backbut,print,refresh;
 
     public void retrieve(){
-        DefaultTableModel dt  = new StaffConnection().staffDataretrival();
-        staftab.setModel(dt);
+        DefaultTableModel dt  = new supplierconnections().refreshSupplier();
+        suppliertable.setModel(dt);
     }
+    public SupplierClass() {
 
-    public  Staffclass(){
-        final DefaultTableModel costomermodel = new StaffConnection().adminStaff();
-        staftab = new JTable(costomermodel);
-        staftab.setBackground(Color.decode("#FFCCBC"));
-        staftab.setGridColor(Color.WHITE);
+        final DefaultTableModel costomermodel = new supplierconnections().supplieradminconnect();
+        suppliertable = new JTable(costomermodel);
+        suppliertable.setBackground(Color.decode("#FFCCBC"));
+        suppliertable.setGridColor(Color.WHITE);
         staff = new JPanel();
         sntf = new JTextField(25);
         fnametf = new JTextField(25);
         stafID = new JTextField();
         gentf = new JTextField(10);
-                postf = new JTextField(25);
-                phon = new JTextField(18);
-                addre = new JTextField(50);
+        postf = new JTextField(25);
+        phon = new JTextField(18);
+        addre = new JTextField(50);
         searchtf = new JTextField(25);
 
-        JScrollPane maintable = new JScrollPane(staftab);
+        JScrollPane maintable = new JScrollPane(suppliertable);
         JPanel jPanel2 = new JPanel();
         jPanel2.setBackground(Color.decode("#FF5722"));
         jPanel2.setLayout(new FlowLayout(FlowLayout.CENTER));
         final JPanel admintextfpanel = new JPanel();
         admintextfpanel.setLayout(new GridLayout(7, 2));
-        admintextfpanel.setBackground(Color.decode("#2a334f"));
+        admintextfpanel.setBackground(Color.decode("#ffecb3"));
         final JButton backmenu, Searchbtn;
-        JButton addrow2btn = new JButton();
-        addrow2btn.setBackground(Color.decode("#fd9901"));
-        addrow2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
-        addrow2btn.setForeground(Color.WHITE);
-        addrow2btn.setText("Add New Staff");
 
-
-        JButton save2btn = new JButton();
-        save2btn.setBackground(Color.decode("#fd9901"));
-        save2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
-        save2btn.setForeground(Color.WHITE);
-        save2btn.setText("Update ");
-        save2btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                int index = staftab.getSelectedRow();
-                String date = staftab.getValueAt(index, 0).toString();
-                if (new StaffConnection().staffUpdate(sntf.getText(),sntf.getText(), fnametf.getText(), stafID.getText(), gentf.getText(), postf.getText(), phon.getText(), addre.getText(),addre.getText())) {
-                    JOptionPane.showMessageDialog(null, "Successfully Updated");
-
-
-
-                    sntf.setText("");
-                    fnametf.setText("");
-                    stafID.setText("");
-                    gentf.setText("");
-                    postf.setText("");
-                    phon.setText("");
-                    addre.setText("");
-
-                    retrieve();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Not Updated");
-                }
-
-
-            }
-        });
-        JButton delete2btn = new JButton();
-        delete2btn.setBackground(Color.decode("#fd9901"));
-        delete2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
-        delete2btn.setForeground(Color.WHITE);
-        delete2btn.setText("Remove Staff");
-        delete2btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                String[] op = {"Yes", "No"};
-                int ans = JOptionPane.showOptionDialog(null, "Sure to delete", "Delete Confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, op, op[1]);
-
-                if (ans == 0) {
-
-                    int index = staftab.getSelectedRow();
-                    String date = staftab.getValueAt(index, 0).toString();
-
-                    if (new productconnections().supermarketdelete(date))
-                        JOptionPane.showMessageDialog(null, "Deleted Successfully ");
-
-                    sntf.setText("");
-                    fnametf.setText("");
-                    stafID.setText("");
-                    gentf.setText("");
-                    postf.setText("");
-                    phon.setText("");
-                    addre.setText("");
-
-
-                    retrieve();
-                }else {
-                    JOptionPane.showMessageDialog(null, "Not Deleted");
-                }
-            }
-
-        });
-        searchtf = new JTextField(10);
+        searchtf = new TextHint("Enter the name or code of  the Supplier here");
         searchtf.setBackground(Color.white);
         searchtf.setFont(new java.awt.Font("Virtual DJ", 1, 19)); // NOI18N
-        Searchbtn = new JButton("Find Staff");
+        Searchbtn = new JButton("Find Supplier");
         Searchbtn.setBackground(Color.decode("#BF360C"));
         Searchbtn.setFont(new Font("Virtual DJ", 1, 19));
         Searchbtn.setForeground(Color.WHITE);
@@ -206,23 +131,30 @@ public class Staffclass extends JFrame implements ActionListener{
         backbut = new JButton("Back");
         refresh = new JButton("Refresh");
         refresh.addActionListener(this);
+        refresh.setForeground(Color.WHITE);
+        refresh.setFont(new Font("Virtual DJ", 1, 19));
         refresh.setBackground(Color.decode("#BF360C"));
         backpanel.add(refresh);
         print = new JButton("Print");
-       print.addActionListener(this);
+        print.addActionListener(this);
         print.setBackground(Color.decode("#BF360C"));
+        print.setFont(new Font("Virtual DJ", 1, 19));
+        print.setForeground(Color.WHITE);
         backpanel.add(print);
         backbut.addActionListener(this);
+        backbut.setForeground(Color.WHITE);
+        backbut.setFont(new Font("Virtual DJ", 1, 19));
         backbut.setBackground(Color.decode("#BF360C"));
         backpanel.add(backbut);
 
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocation(200, 100);
-        setResizable(false);
-        setSize(1000,500);
-        setTitle("Staff Table");
-       add(jPanel2, BorderLayout.NORTH);
+        setResizable(true);
+        setMinimumSize(new Dimension(1000,500));
+        setSize(1200,700);
+        setTitle("Supplier Table");
+        add(jPanel2, BorderLayout.NORTH);
         add(maintable, BorderLayout.CENTER);
         add(backpanel, BorderLayout.SOUTH);
 
@@ -239,3 +171,4 @@ public class Staffclass extends JFrame implements ActionListener{
         }
     }
 }
+

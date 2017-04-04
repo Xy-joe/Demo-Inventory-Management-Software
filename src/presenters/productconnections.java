@@ -25,14 +25,14 @@ public class productconnections {
             while (rr.next()) {
 
                 int id = rr.getInt(1);String sn = Integer.toString(id);
-                int ID = rr.getInt(2); String produID = Integer.toString(ID);
-                String date = rr.getString(3);
+                 String produID = rr.getString(3);
+                String date = rr.getString(2);
                 String bcode = rr.getString(4);
                 String prod = rr.getString(5);
                 double pd = rr.getDouble(6); String price = Double.toString(pd);
                 int stock_no = rr.getInt(7); String stock = Integer.toString(stock_no);
 
-                dt.addRow(new String[]{sn,produID, date,bcode, prod, price, stock});
+                dt.addRow(new String[]{sn,date,produID,bcode, prod, price, stock});
             }
             return dt;
 
@@ -75,9 +75,9 @@ public class productconnections {
         }
         return null;
     }
-    public  Boolean supermarketadd(String sn, String date, String prodID, String bcode, String prod, String price, String stock){
+    public  Boolean supermarketadd( String date, String prodID, String bcode, String prod, String price, String stock){
 
-        String sql = "INSERT INTO Supermarket.Products(S_N, Date, ProductID, Barcode, Product, Price, Stock) VALUES('"+sn+"','"+date+"','"+prodID+"', '"+bcode+"', '"+prod+"', '"+price+"','"+stock+"')";
+        String sql = "INSERT INTO Supermarket.Products( Date, ProductID, Barcode, Product, Price, Stock) VALUES('"+date+"','"+prodID+"', '"+bcode+"', '"+prod+"', '"+price+"','"+stock+"')";
 
         try{
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
@@ -137,16 +137,15 @@ public class productconnections {
             while (rr.next()) {
 
                 int id = rr.getInt(1); String sn = Integer.toString(id);
-                String date = rr.getString(3);
-                int prodid = rr.getInt(2);
-                String idm = Integer.toString(prodid);
+                String date = rr.getString(2);
+               String prodid = rr.getString(3);
                 String bcode = rr.getString(4);
                 String prod = rr.getString(5);
                 double pr = rr.getDouble(6);String price = Double.toString(pr);
                 int stock_no = rr.getInt(7); String stock = Integer.toString(stock_no);
 
 
-                dt.addRow(new String[]{sn, date, idm,bcode, prod, price,stock});
+                dt.addRow(new String[]{sn, date, prodid,bcode, prod, price,stock});
             }
 
             return dt;

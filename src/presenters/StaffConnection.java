@@ -53,9 +53,9 @@ public class StaffConnection {
         return null;
     }
 
-    public Boolean staffadd(String no, String sn, String fn, String stafid, String gen, String pos, String phone, String addres, String date) {
+    public Boolean staffadd( String sn, String fn, String stafid, String gen, String pos, String phone, String addres, String date) {
 
-        String sql = "INSERT INTO Supermarket.Staff_Table(Serial_No,SURNAME, FIRSTNAME, STAFF_ID, GENDER, OFFICE, PHONE_NUMBER, ADDRESS, Date_Of_Appointment) VALUES('" + no + "','" + sn + "','" + fn + "','" + stafid + "', '" + gen + "', '" + pos + "', '" + phone + "', '" + addres + "', '"+date+"')";
+        String sql = "INSERT INTO Supermarket.Staff_Table(SURNAME, FIRSTNAME, STAFF_ID, GENDER, OFFICE, PHONE_NUMBER, ADDRESS, Date_Of_Appiontment) VALUES('" + sn + "','" + fn + "','" + stafid + "', '" + gen + "', '" + pos + "', '" + phone + "', '" + addres + "', '"+date+"')";
 
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
@@ -134,7 +134,19 @@ public class StaffConnection {
         }
     }
 
+    public Boolean staffDeletion(String sn) {
+        String sql = "DELETE FROM Supermarket.Staff_Table WHERE Serial_No ='" + sn + "'";
 
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            Statement stmt = con.prepareStatement(sql);
+            stmt.execute(sql);
+            return true;
+        } catch (SQLException es) {
+            es.printStackTrace();
+            return false;
+        }
+    }
 }
 
 
