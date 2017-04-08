@@ -19,7 +19,7 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
     JButton isert,refresh, back;
     public AddStaff()  {
         header = new JPanel(new FlowLayout());
-        header.setBackground(Color.decode("#009688"));
+        header.setBackground(Color.decode("#F57C00"));
         ImageIcon img = new ImageIcon("resource/adsta.png");
         img.getImage();
         headl = new JLabel(img);
@@ -28,7 +28,7 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
         headl.setForeground(Color.WHITE);
         header.add(headl);
         body = new JPanel(new GridLayout(8,2));
-        body.setBackground(Color.decode("#B2DFDB"));
+        body.setBackground(Color.decode("#FFA726"));
 
 
         stafsna = new JLabel();
@@ -120,17 +120,17 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
         body.add(datetf);
 
         button = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        button.setBackground(Color.decode("#004d40"));
+        button.setBackground(Color.decode("#EF6C00"));
         isert = new JButton("Insert");
-        isert.setBackground(Color.decode("#00796b"));
+        isert.setBackground(Color.decode("#E65100"));
         isert.setForeground(Color.WHITE);
         isert.addActionListener(this);
         refresh = new JButton("Refresh");
-        refresh.setBackground(Color.decode("#00796B"));
+        refresh.setBackground(Color.decode("#E65100"));
         refresh.setForeground(Color.WHITE);
         refresh.addActionListener(this);
         back = new JButton("Back");
-        back.setBackground(Color.decode("#00796B"));
+        back.setBackground(Color.decode("#E65100"));
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         button.add(isert);button.add(refresh);button.add(back);

@@ -13,13 +13,12 @@ import java.sql.*;
 
 public class Supermarket implements ActionListener {
     JMenuBar menuBar;
-    JFrame mainadmin;
     JMenuItem  adp, addstaff, jmiClose, updatestaff, delstaf, htry
-            ,addcus,delcus,upcus,settings,contact,help,adsup,delsup,upsup,supid,supna,supt, rpt, admintextfpaneli, exit;
-    JMenu productmenu, staffmenu, customermenu, suppliermenu, purchasemenu,exitmenu, findstaf,finsup;
+            ,addcus,delcus,upcus,settings,contact,help,adsup,delsup,upsup,supid,supna,supt, rpt,deptid,deptname, admintextfpaneli, exit;
+    JMenu productmenu, staffmenu, customermenu, suppliermenu, purchasemenu,exitmenu, findd,finsup;
    // JTabbedPane tpane;
   
-    JFrame cashier, staff;
+    JFrame mainadmin,cashier, staff;
 
   JPanel welcome, jPanel2,admintextfpanel,last, backpa,cost, mainp2;
 
@@ -63,7 +62,8 @@ ImagePanel loader;
      //   mainadmin.setBounds(400, 400, 1100, 700);
      mainadmin.setLocationRelativeTo(null);
        mainadmin.setMinimumSize(new Dimension(1100,700));
-      mainadmin.setTitle("PEGASUS SOFTWARE");
+      mainadmin.setTitle("PEGASUS Supermarket IMS");
+       mainadmin.setBackground(Color.decode("#E3F2FD"));
         mainadmin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        mainadmin.setLayout(new CardLayout(0, 0));
        cost = new JPanel();
@@ -99,7 +99,7 @@ ImagePanel loader;
        pro.setBorderPainted(false);
 
        pri = new JButton("Cashier");
-       JLabel supname = new JLabel("PEGASUS INVENTORY MANAGEMENT SOFTWARE",JLabel.CENTER);
+       JLabel supname = new JLabel("PEGASUS SUPERMARKER IMS",JLabel.CENTER);
        JLabel comme = new JLabel("licenced to shoprite Supermarket ",JLabel.RIGHT);
        comme.setFont(new Font("Virtual DJ", Font.ITALIC, 18));
        comme.setForeground(Color.BLACK);
@@ -144,21 +144,21 @@ ImagePanel loader;
 
          //ADMINISTRATOR  PRODUCTS TABLE
        menuBar = new JMenuBar();
-       menuBar.setBackground(Color.decode("#F57C00"));
+       menuBar.setBackground(Color.decode("#90CAF9"));
        menuBar.setBorderPainted(true);
 // Add menu "Operation" to menu bar
        productmenu = new JMenu("Product");
        productmenu.setPopupMenuVisible(true);
        productmenu.setMnemonic('P');
        productmenu.setFont(new Font("Virtual DJ", 1, 20));
-       productmenu.setForeground(Color.WHITE);
+       productmenu.setForeground(Color.BLACK);
        productmenu.addActionListener(this);
        menuBar.add(productmenu);
 // Add menu "Staff" to menu bar
        staffmenu = new JMenu("Staff");
        staffmenu.setMnemonic('S');
        staffmenu.setFont(new Font("Virtual DJ", 1, 20));
-       staffmenu.setForeground(Color.WHITE);
+       staffmenu.setForeground(Color.BLACK);
        menuBar.add(staffmenu);
 
        // Add menu "Supplier" to menu bar
@@ -166,21 +166,21 @@ ImagePanel loader;
        suppliermenu = new JMenu("Supplier");
        suppliermenu.setMnemonic('P');
       suppliermenu.setFont(new Font("Virtual DJ", 1, 20));
-       suppliermenu.setForeground(Color.WHITE);
+       suppliermenu.setForeground(Color.BLACK);
        menuBar.add(suppliermenu);
        // Add menu "Purchase" to menu bar
 
        purchasemenu = new JMenu("Purchase");
        purchasemenu.setMnemonic('H');
        purchasemenu.setFont(new Font("Virtual DJ", 1, 20));
-       purchasemenu.setForeground(Color.WHITE);
+       purchasemenu.setForeground(Color.BLACK);
        menuBar.add(purchasemenu);
        // Add menu "Operation" to menu bar
 
        exitmenu = new JMenu("Others");
        exitmenu.setMnemonic('E');
        exitmenu.setFont(new Font("Virtual DJ", 1, 20));
-      exitmenu.setForeground(Color.WHITE);
+      exitmenu.setForeground(Color.BLACK);
        menuBar.add(exitmenu);
 
 
@@ -207,15 +207,18 @@ ImagePanel loader;
        delsup.addActionListener(this);
        suppliermenu.add(supt = new JMenuItem("Show table"));
        supt.addActionListener(this);
-       suppliermenu.addSeparator();
-       suppliermenu.add(finsup = new JMenu("Find Supplier by"));
-       finsup.add(supna= new JMenuItem("Name"));
-       finsup.add(supid = new JMenuItem("ID"));
+
 
        // Add menu items with mnemonics to menu "Purchase"
        purchasemenu.add(htry = new JMenuItem("Purchase History", 'H'));
+       htry.addActionListener(this);
        purchasemenu.add(rpt = new JMenuItem("New Dept", 'T'));
+       rpt.addActionListener(this);
        purchasemenu.add(admintextfpaneli = new JMenuItem("Dept History", 'L'));
+       admintextfpaneli.addActionListener(this);
+       purchasemenu.add(findd = new JMenu("View dept details by"));
+
+
        // Add menu items with mnemonics to menu "Exit"
        exitmenu.add(help = new JMenuItem("Help",'P'));
        exitmenu.add(settings = new JMenuItem("Settings", 'S'));
@@ -255,8 +258,9 @@ ImagePanel loader;
 
        final  DefaultTableModel costomermodel = new productconnections().supermarketadminconnect();
         costomertable = new JTable(costomermodel);
-       costomertable.setBackground(Color.decode("#FFFFFF"));
-       costomertable.setGridColor(Color.decode("#F57C00"));
+       costomertable.setMinimumSize(new Dimension(800,700));
+       costomertable.setBackground(Color.decode("#BBDEFB"));
+       costomertable.setGridColor(Color.decode("#1565C0"));
        costomertable.setFont(new Font("Droid Sans Ethopic", 1, 12));
        costomertable.setForeground(Color.decode("#202020"));
        costomertable.addMouseListener(new MouseAdapter() {
@@ -300,13 +304,15 @@ esp.printStackTrace();
        });
 
        JScrollPane maintable = new JScrollPane(costomertable);
+       maintable.setBorder(BorderFactory.createLineBorder(Color.black));
         jPanel2 = new JPanel();
-        jPanel2.setBackground(Color.decode("#FB8C00"));
+        jPanel2.setBackground(Color.decode("#BBDEFB"));
+       jPanel2.setBorder(BorderFactory.createTitledBorder("Options:"));
         jPanel2.setLayout(new GridLayout(3,2,15,10));
         JButton addrow2btn = new JButton();
-        addrow2btn.setBackground(Color.decode("#BF360C"));
+        addrow2btn.setBackground(Color.decode("#1565C0"));
         addrow2btn.setFont(new Font("Virtual DJ", Font.ITALIC, 20));
-       addrow2btn.setBounds(79,100,100,79);
+       addrow2btn.setBounds(50,50,50,50);
        addrow2btn.setForeground(Color.WHITE);
         addrow2btn.setText("Add New Product");
         addrow2btn.addActionListener(new ActionListener() {
@@ -331,8 +337,8 @@ esp.printStackTrace();
         });
         jPanel2.add(addrow2btn);
         JButton save2btn = new JButton();
-        save2btn.setBackground(Color.decode("#BF360C"));
-       save2btn.setBounds(79,100,100,79);
+        save2btn.setBackground(Color.decode("#1565C0"));
+       save2btn.setBounds(50,50,50,50);
         save2btn.setFont(new Font("Virtual DJ", Font.ITALIC, 20));
        save2btn.setForeground(Color.WHITE);
         save2btn.setText("Update");
@@ -363,9 +369,10 @@ esp.printStackTrace();
         });
         jPanel2.add(save2btn);
        JButton delete2btn = new JButton();
-       delete2btn.setBackground(Color.decode("#BF360C"));
+       delete2btn.setBackground(Color.decode("#1565C0"));
        delete2btn.setFont(new Font("Virtual DJ", Font.ITALIC, 20));
-       delete2btn.setBounds(79,100,100,79);
+      delete2btn.setBounds(50,50,50,50);
+       // delete2btn.setBounds(79,100,100,79);
        delete2btn.setForeground(Color.WHITE);
        delete2btn.setText("Delete Product");
        delete2btn.addActionListener(new ActionListener() {
@@ -405,20 +412,20 @@ esp.printStackTrace();
        });
        jPanel2.add(delete2btn);
        retrievebtn = new JButton();
-       retrievebtn.setBackground(Color.decode("#BF360C"));
+       retrievebtn.setBackground(Color.decode("#1565C0"));
        retrievebtn.setFont(new Font("Virtual DJ", Font.ITALIC, 20));
        retrievebtn.setForeground(Color.WHITE);
-       retrievebtn.setBounds(79,100,100,79);
+       retrievebtn.setBounds(50,50,50,50);
        retrievebtn.setText("Refresh");
        retrievebtn.addActionListener(this);
        jPanel2.add(retrievebtn);
         searchtf = new TextHint("Type Product Barcode Here");
         searchtf.setBackground(Color.white);
-       searchtf.setBounds(79,100,100,79);
+       searchtf.setBounds(50,50,50,50);
         searchtf.setFont(new Font("Virtual DJ", 1, 17)); // NOI18N
          Searchbtn = new JButton("Find Product");
-       Searchbtn.setBounds(79,100,100,79);
-       Searchbtn.setBackground(Color.decode("#BF360C"));
+       Searchbtn.setBounds(50,50,50,50);
+       Searchbtn.setBackground(Color.decode("#1565C0"));
        Searchbtn.setFont(new Font("Virtual DJ", Font.ITALIC, 20));
        Searchbtn.setForeground(Color.WHITE);
        jPanel2.add(Searchbtn);
@@ -468,14 +475,15 @@ esp.printStackTrace();
 
        admintextfpanel = new JPanel();
        admintextfpanel.setLayout(new GridLayout(7,2,5,15));
-       admintextfpanel.setBackground(Color.decode("#FB8C00"));
+       admintextfpanel.setBackground(Color.decode("#BBDEFB"));
+       admintextfpanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 // Serial no
        sntf.setBackground(Color.decode("#ffffff"));
        JLabel jLabel0 = new JLabel();
-       jLabel0.setBackground(Color.WHITE);
+       jLabel0.setBackground(Color.BLACK);
        jLabel0.setFont(new Font("Serif", Font.BOLD, 20)); // NOI18N
-       jLabel0.setForeground(Color.decode("#dcecfc"));
+       jLabel0.setForeground(Color.BLACK);
        jLabel0.setText("S/N");
        admintextfpanel.add(jLabel0);
        admintextfpanel.add(sntf);
@@ -483,25 +491,23 @@ esp.printStackTrace();
        datetF.setBackground(Color.decode("#ffffff"));
        datetF.setBounds(5,5,15,10);
        JLabel jLabel1 = new JLabel();
-       jLabel1.setBackground(Color.WHITE);
        jLabel1.setFont(new Font("Serif", Font.BOLD, 20)); // NOI18N
-       jLabel1.setForeground(Color.decode("#dcecfc"));
+       jLabel1.setForeground(Color.BLACK);
        jLabel1.setText("Date");
        admintextfpanel.add(jLabel1);
        admintextfpanel.add(datetF);
 //Product ID
        prodID.setBackground(Color.decode("#ffffff"));
        JLabel jLabel2 = new JLabel();
-       jLabel2.setBackground(Color.WHITE);
        jLabel2.setFont(new Font("Serif", Font.BOLD, 20)); // NOI18N
-       jLabel2.setForeground(Color.decode("#dcecfc"));
+       jLabel2.setForeground(Color.BLACK);
        jLabel2.setText("ProductID");
        admintextfpanel.add(jLabel2);
        admintextfpanel.add(prodID);
 // Barcode
        bcodetf.setBackground(Color.decode("#ffffff"));
        JButton bacode = new JButton("Generate Code");
-       bacode.setBackground(Color.decode("#BF360C"));
+       bacode.setBackground(Color.decode("#1565C0"));
        bacode.setFont(new Font("Serif", Font.BOLD, 20)); // NOI18N
        bacode.setForeground(Color.WHITE);
        bacode.setFocusPainted(false);
@@ -512,9 +518,8 @@ esp.printStackTrace();
 // Product Name
        prodname.setBackground(Color.decode("#ffffff"));
        JLabel jLabel3 = new JLabel();
-       jLabel3.setBackground(Color.WHITE);
        jLabel3.setFont(new Font("Serif", Font.BOLD, 20)); // NOI18N
-       jLabel3.setForeground(Color.decode("#dcecfc"));
+       jLabel3.setForeground(Color.BLACK);
        jLabel3.setText("Product");
        admintextfpanel.add(jLabel3);
        admintextfpanel.add(prodname);
@@ -522,34 +527,33 @@ esp.printStackTrace();
 
        prodprice.setBackground(Color.decode("#ffffff"));
        JLabel jLabel4 = new JLabel();
-       jLabel4.setBackground(Color.WHITE);
        jLabel4.setFont(new Font("Serif", Font.BOLD, 20)); // NOI18N
-       jLabel4.setForeground(Color.decode("#dcecfc"));
+       jLabel4.setForeground(Color.BLACK);
        jLabel4.setText("Price");
        admintextfpanel.add(jLabel4);
        admintextfpanel.add(prodprice);
 // Stock
        stock.setBackground(Color.decode("#ffffff"));
        JLabel jLabel5 = new JLabel();
-       jLabel5.setBackground(Color.WHITE);
        jLabel5.setFont(new Font("Serif", Font.BOLD, 20)); // NOI18N
-       jLabel5.setForeground(Color.decode("#dcecfc"));
+       jLabel5.setForeground(Color.BLACK);
        jLabel5.setText("Stock");
        admintextfpanel.add(jLabel5);
        admintextfpanel.add(stock);
 
       backpa = new JPanel();
-       backpa.setBackground(Color.decode("#EF6C00"));
+       backpa.setBackground(Color.decode("#64B5F6"));
       backmenu = new JButton("Back");
-       backmenu.setBackground(Color.decode("#BF360C"));
+       backmenu.setBackground(Color.decode("#1565C0"));
        backmenu.setFont(new Font("Serif", Font.BOLD, 20));
        backmenu.setForeground(Color.WHITE);
        backmenu.addActionListener(this);
       backpa.add(backmenu);
 
        last = new JPanel();
-       last.setLayout(new BorderLayout());
-       last.add(jPanel2,BorderLayout.CENTER);
+       last.setLayout(new BorderLayout(0,10));
+       last.setBackground(Color.decode("#BBDEFB"));
+       last.add(jPanel2,BorderLayout.NORTH);
        last.add(admintextfpanel, BorderLayout.SOUTH);
        cost.add(menuBar, BorderLayout.NORTH);
         cost.add(maintable, BorderLayout.CENTER);
@@ -644,6 +648,12 @@ esp.printStackTrace();
             new UpdateSupplier().setVisible(true);
         }else if (src == delsup){
             new DeleteSupplier().setVisible(true);
+        }else if(src == htry){
+            new HistoryClass().setVisible(true);
+        }else  if (src == admintextfpaneli){
+            new DeptClass().setVisible(true);
+        }else if (src == rpt){
+            new NewDeptClass().setVisible(true);
         }
     }
     public boolean checkfornull(){

@@ -1,5 +1,6 @@
 package views;
 
+import presenters.SQLDate;
 import presenters.StaffConnection;
 
 import javax.swing.*;
@@ -15,12 +16,14 @@ import java.awt.event.ActionListener;
  */
 public class AddSupplier extends JFrame implements ActionListener {
 JPanel mainp,header,body,button;
+    SQLDate date1;
 JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,date,pname,pqty,lsd,sd,cp,bc;
     JTextField stsntf,stafsnatf,staffnatf, stafidtf,stafpositf,stafphontf,staffgentf,stafadrestf,pnametf,pqtytf,lsdtf,sdtf,cptf,bctf;
     JButton isert,refresh, back;
     public AddSupplier()  {
+        date1 = new SQLDate();
         header = new JPanel(new FlowLayout());
-        header.setBackground(Color.decode("#F57C00"));
+        header.setBackground(Color.decode("#64B5F6"));
         ImageIcon img = new ImageIcon("resource/adsta.png");
         img.getImage();
         headl = new JLabel(img);
@@ -29,7 +32,7 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
         headl.setForeground(Color.WHITE);
         header.add(headl);
         body = new JPanel(new GridLayout(13,2));
-        body.setBackground(Color.decode("#FFA726"));
+        body.setBackground(Color.decode("#BBDEFB"));
 
 
         stafsna = new JLabel();
@@ -140,7 +143,7 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
         sdtf.setFont(new Font("Liberation Serif", Font.PLAIN,  13));
         sdtf.setForeground(Color.black);
         body.add(sd);
-        body.add(sdtf);
+        body.add(date1);
 
         lsd = new JLabel();
         lsd.setForeground(Color.black);
@@ -176,20 +179,20 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
         body.add(bctf);
 
         button = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        button.setBackground(Color.decode("#EF6C00"));
+        button.setBackground(Color.decode("#64B5F6"));
         isert = new JButton("ADD");
         isert.setBounds(79,79,100,79);
-        isert.setBackground(Color.decode("#E65100"));
+        isert.setBackground(Color.decode("#1565C0"));
         isert.setForeground(Color.WHITE);
         isert.addActionListener(this);
         refresh = new JButton("REFRESH");
         refresh.setBounds(79,79,100,79);
-        refresh.setBackground(Color.decode("#E65100"));
+        refresh.setBackground(Color.decode("#1565C0"));
         refresh.setForeground(Color.WHITE);
         refresh.addActionListener(this);
         back = new JButton("BACK");
         back.setBounds(79,79,100,79);
-        back.setBackground(Color.decode("#E65100"));
+        back.setBackground(Color.decode("#1565C0"));
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         button.add(isert);button.add(refresh);button.add(back);
@@ -217,7 +220,7 @@ JLabel headl,stsn, stafsna,staffna, stafid,stafposi,stafphon,staffgen,stafadres,
         }
         else if (src == isert){
             if (new supplierconnections().addsupplier(stafsnatf.getText(), staffnatf.getText(), stafidtf.getText(),
-                    staffgentf.getText(), stafpositf.getText(), stafphontf.getText(), stafadrestf.getText(),pnametf.getText(),pqtytf.getText(),lsdtf.getText(),sdtf.getText(),cptf.getText(),bctf.getText())) {
+                    staffgentf.getText(), stafpositf.getText(), stafphontf.getText(), stafadrestf.getText(), pnametf.getText(), pqtytf.getText(), lsdtf.getText(), date1.datePicker.getJFormattedTextField().getText(), cptf.getText(), bctf.getText())) {
                 JOptionPane.showMessageDialog(null, "Successfully Added");
 
                 stafsnatf.setText("");

@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
 public class StaffConnection {
-
+Connection con;
     public StaffConnection() {
 
 
@@ -147,6 +147,49 @@ public class StaffConnection {
             return false;
         }
     }
+
+
+    //Search staff by id
+    public DefaultTableModel staffsearch(String id ){
+        DefaultTableModel dt = new DefaultTableModel();
+        dt.addColumn("Serial_No");
+        dt.addColumn("SURNAME");
+        dt.addColumn("FIRSTNAME");
+        dt.addColumn("Staff_ID");
+        dt.addColumn("GENDER");
+        dt.addColumn("OFFICE");
+        dt.addColumn("PHONE_NUMBER");
+        dt.addColumn("ADDRESS");
+        dt.addColumn("Date_Of_Appiontment");
+        String sql ="SELECT *  FROM Staff_Table WHERE STAFF_ID = '"+id+"' ";
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Supermarket", "root", "joe9ty");
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+
+                int sn = rs.getInt(1);
+                String no = Integer.toString(sn);
+                String surname = rs.getString(2);
+                String firstname = rs.getString(3);
+                String staffID = rs.getString(4);
+                String gender = rs.getString(5);
+                String positions = rs.getString(6);
+                int phone = rs.getInt(7);
+                String pn = Integer.toString(phone);
+                String addres = rs.getString(8);
+                String date = rs.getString(9);
+
+                dt.addRow(new String[]{no, surname, firstname, staffID, gender, positions, pn, addres, date});
+            }
+            return dt;
+
+
+        }catch (SQLException es){
+            JOptionPane.showMessageDialog(null, "Search Connection Problem");
+            es.printStackTrace();
+return null;
+        }}
 }
 
 

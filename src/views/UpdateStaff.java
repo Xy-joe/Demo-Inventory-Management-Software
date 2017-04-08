@@ -24,7 +24,7 @@ public class UpdateStaff extends JFrame implements ActionListener {
         searchpa = new JPanel(new GridLayout(1,2));
         search = new JButton("Search for Staff");
         search.setForeground(Color.WHITE);
-        search.setBackground(Color.decode("#00838F"));
+        search.setBackground(Color.decode("#E65100"));
         search.addActionListener(this);
         searchpa.setSize(500,60);
         searchtf = new TextHint("Enter Staff Id here ");
@@ -35,7 +35,7 @@ public class UpdateStaff extends JFrame implements ActionListener {
         searchpa.add(searchtf);
 
         header = new JPanel(new FlowLayout());
-        header.setBackground(Color.decode("#00BCD4"));
+        header.setBackground(Color.decode("#F57C00"));
         ImageIcon img = new ImageIcon("resource/adsta.png");
         img.getImage();
         headl = new JLabel(img);
@@ -45,7 +45,7 @@ public class UpdateStaff extends JFrame implements ActionListener {
         header.add(headl);
         header.add(searchpa);
         body = new JPanel(new GridLayout(9,2));
-        body.setBackground(Color.decode("#B2EBF2"));
+        body.setBackground(Color.decode("#FFA726"));
 
         stsn = new JLabel();
         stsn.setForeground(Color.black);
@@ -148,17 +148,17 @@ public class UpdateStaff extends JFrame implements ActionListener {
         body.add(datetf);
 
         button = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        button.setBackground(Color.decode("#00838F"));
+        button.setBackground(Color.decode("#EF6C00"));
         isert = new JButton("Update");
-        isert.setBackground(Color.decode("#00ACC1"));
+        isert.setBackground(Color.decode("#E65100"));
         isert.setForeground(Color.WHITE);
         isert.addActionListener(this);
         refresh = new JButton("Refresh");
-        refresh.setBackground(Color.decode("#00ACC1"));
+        refresh.setBackground(Color.decode("#E65100"));
         refresh.setForeground(Color.WHITE);
         refresh.addActionListener(this);
         back = new JButton("Back");
-        back.setBackground(Color.decode("#00ACC1"));
+        back.setBackground(Color.decode("#E65100"));
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         button.add(isert);button.add(refresh);button.add(back);

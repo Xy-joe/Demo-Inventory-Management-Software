@@ -1,34 +1,44 @@
 package views;
 
 import presenters.StaffConnection;
+import presenters.TextHint;
 import presenters.productconnections;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
+import java.util.*;
 
 public class Staffclass extends JFrame implements ActionListener{
     JPanel staff,backpanel;
     JTable staftab;
+    JLabel selectionhead;
     JTextField sntf, fnametf, stafID, gentf, postf, phon, addre, searchtf;
-    JPanel main = new JPanel();
-    JButton backbut,print,refresh;
+    JComboBox selection;
+    JButton backbut,print,refresh, backmenu, Searchbtn;
+   private DefaultTableModel costomermodel,dt,search;
+    String[] sortcategories =  {"Serial No","Sort by date", "Alphabetically by name","Alphabetically by job office "};
+
 
     public void retrieve(){
-        DefaultTableModel dt  = new StaffConnection().staffDataretrival();
+         dt  = new StaffConnection().staffDataretrival();
         staftab.setModel(dt);
+        searchtf.setText("");
     }
 
     public  Staffclass(){
-        final DefaultTableModel costomermodel = new StaffConnection().adminStaff();
+         costomermodel = new StaffConnection().adminStaff();
         staftab = new JTable(costomermodel);
-        staftab.setBackground(Color.decode("#FFCCBC"));
+        staftab.setBackground(Color.decode("#CFD8DC"));
         staftab.setGridColor(Color.WHITE);
+        staftab.setAutoCreateRowSorter(false);
         staff = new JPanel();
         sntf = new JTextField(25);
         fnametf = new JTextField(25);
@@ -41,102 +51,35 @@ public class Staffclass extends JFrame implements ActionListener{
 
         JScrollPane maintable = new JScrollPane(staftab);
         JPanel jPanel2 = new JPanel();
-        jPanel2.setBackground(Color.decode("#FF5722"));
+        jPanel2.setBackground(Color.decode("#607D8B"));
         jPanel2.setLayout(new FlowLayout(FlowLayout.CENTER));
         final JPanel admintextfpanel = new JPanel();
         admintextfpanel.setLayout(new GridLayout(7, 2));
         admintextfpanel.setBackground(Color.decode("#2a334f"));
-        final JButton backmenu, Searchbtn;
-        JButton addrow2btn = new JButton();
-        addrow2btn.setBackground(Color.decode("#fd9901"));
-        addrow2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
-        addrow2btn.setForeground(Color.WHITE);
-        addrow2btn.setText("Add New Staff");
-
-
-        JButton save2btn = new JButton();
-        save2btn.setBackground(Color.decode("#fd9901"));
-        save2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
-        save2btn.setForeground(Color.WHITE);
-        save2btn.setText("Update ");
-        save2btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                int index = staftab.getSelectedRow();
-                String date = staftab.getValueAt(index, 0).toString();
-                if (new StaffConnection().staffUpdate(sntf.getText(),sntf.getText(), fnametf.getText(), stafID.getText(), gentf.getText(), postf.getText(), phon.getText(), addre.getText(),addre.getText())) {
-                    JOptionPane.showMessageDialog(null, "Successfully Updated");
 
 
 
-                    sntf.setText("");
-                    fnametf.setText("");
-                    stafID.setText("");
-                    gentf.setText("");
-                    postf.setText("");
-                    phon.setText("");
-                    addre.setText("");
+        selection = new JComboBox(sortcategories);
+        selection.setBackground(Color.decode("#FFFFFF"));
+        selection.setFont(new Font("Liberation Serif", Font.BOLD,20));
+        selection.addActionListener(this);
+        selectionhead = new JLabel();
+        selectionhead.setText("Sort Categories ");
+        selectionhead.setForeground(Color.WHITE);
+        selectionhead.setFont(new Font("Virtual DJ", Font.BOLD,20));
+        jPanel2.add(selectionhead);
+        jPanel2.add(selection);
 
-                    retrieve();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Not Updated");
-                }
-
-
-            }
-        });
-        JButton delete2btn = new JButton();
-        delete2btn.setBackground(Color.decode("#fd9901"));
-        delete2btn.setFont(new java.awt.Font("Virtual DJ", 1, 19));
-        delete2btn.setForeground(Color.WHITE);
-        delete2btn.setText("Remove Staff");
-        delete2btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                String[] op = {"Yes", "No"};
-                int ans = JOptionPane.showOptionDialog(null, "Sure to delete", "Delete Confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, op, op[1]);
-
-                if (ans == 0) {
-
-                    int index = staftab.getSelectedRow();
-                    String date = staftab.getValueAt(index, 0).toString();
-
-                    if (new productconnections().supermarketdelete(date))
-                        JOptionPane.showMessageDialog(null, "Deleted Successfully ");
-
-                    sntf.setText("");
-                    fnametf.setText("");
-                    stafID.setText("");
-                    gentf.setText("");
-                    postf.setText("");
-                    phon.setText("");
-                    addre.setText("");
-
-
-                    retrieve();
-                }else {
-                    JOptionPane.showMessageDialog(null, "Not Deleted");
-                }
-            }
-
-        });
-        searchtf = new JTextField(10);
-        searchtf.setBackground(Color.white);
+        searchtf = new TextHint("Enter the staff id here");
+        searchtf.setBackground(Color.WHITE);
         searchtf.setFont(new java.awt.Font("Virtual DJ", 1, 19)); // NOI18N
         Searchbtn = new JButton("Find Staff");
-        Searchbtn.setBackground(Color.decode("#BF360C"));
-        Searchbtn.setFont(new Font("Virtual DJ", 1, 19));
+        Searchbtn.setBackground(Color.decode("#90A4AE"));
         Searchbtn.setForeground(Color.WHITE);
+        Searchbtn.addActionListener(this);
         jPanel2.add(Searchbtn);
         jPanel2.add(searchtf);
-        Searchbtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
 
-
-
-            }
-        });
 
         JPanel backpa = new JPanel();
         backmenu = new JButton("Back");
@@ -202,18 +145,18 @@ public class Staffclass extends JFrame implements ActionListener{
         admintextfpanel.add(jLabel5);admintextfpanel.add(addre);
 
         backpanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        backpanel.setBackground(Color.decode("#D84315"));
+        backpanel.setBackground(Color.decode("#90A4AE"));
         backbut = new JButton("Back");
         refresh = new JButton("Refresh");
         refresh.addActionListener(this);
-        refresh.setBackground(Color.decode("#BF360C"));
+        refresh.setBackground(Color.WHITE);
         backpanel.add(refresh);
         print = new JButton("Print");
        print.addActionListener(this);
-        print.setBackground(Color.decode("#BF360C"));
+        print.setBackground(Color.WHITE);
         backpanel.add(print);
         backbut.addActionListener(this);
-        backbut.setBackground(Color.decode("#BF360C"));
+        backbut.setBackground(Color.WHITE);
         backpanel.add(backbut);
 
         setLayout(new BorderLayout());
@@ -236,6 +179,58 @@ public class Staffclass extends JFrame implements ActionListener{
             setVisible(false);
         }else if (src == refresh){
             retrieve();
+        }else if(src == selection) {
+            String item = (String)selection.getSelectedItem();
+            int datecolumn = 8;
+            int serialnocolumn = 0;
+            int officecolumn = 5;
+            int namecolumn = 1;
+            if (item.equals("Sort by date")){
+                TableRowSorter<TableModel> sorter = new TableRowSorter<>(staftab.getModel());
+                staftab.setRowSorter(sorter);
+                staftab.setAutoCreateRowSorter(false);
+                ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
+                sortKeys.add(new RowSorter.SortKey(datecolumn, SortOrder.ASCENDING));
+                sorter.setSortKeys(sortKeys);
+                sorter.sort();
+
+            }else if (item.equals("Serial No")){
+               TableRowSorter<TableModel> sorter = new TableRowSorter<>(staftab.getModel());
+                staftab.setRowSorter(sorter);
+                staftab.setAutoCreateRowSorter(false);
+                ArrayList<RowSorter.SortKey> keys = new ArrayList<>();
+                keys.add(new RowSorter.SortKey(serialnocolumn,SortOrder.ASCENDING));
+                sorter.setSortKeys(keys);
+                sorter.sort();
+
+
+            }else if (item.equals("Alphabetically by job office")) {
+                TableRowSorter<TableModel> sorter = new TableRowSorter<>(staftab.getModel());
+                staftab.setRowSorter(sorter);
+                staftab.setAutoCreateRowSorter(false);
+                ArrayList<RowSorter.SortKey> keys = new ArrayList<>();
+                keys.add(new RowSorter.SortKey(officecolumn, SortOrder.ASCENDING));
+                sorter.setSortKeys(keys);
+                sorter.sort();
+
+
+            }else if (item.equals("Alphabetically by name")) {
+                TableRowSorter<TableModel> sorter = new TableRowSorter<>(staftab.getModel());
+                staftab.setRowSorter(sorter);
+                staftab.setAutoCreateRowSorter(false);
+                ArrayList<RowSorter.SortKey> keys = new ArrayList<>();
+                keys.add(new RowSorter.SortKey(namecolumn, SortOrder.ASCENDING));
+                sorter.setSortKeys(keys);
+                sorter.sort();
+
+            }
+            }else if (src == Searchbtn){
+            if (searchtf.getText().equals("")){
+                JOptionPane.showMessageDialog(null,"Please enter an Id to search");
+            }else {
+                search = new StaffConnection().staffsearch(searchtf.getText());
+                staftab.setModel(search);
+            }
         }
     }
 }

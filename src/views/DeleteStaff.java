@@ -22,10 +22,10 @@ public class DeleteStaff extends JFrame implements ActionListener{
 
     public DeleteStaff() throws HeadlessException {
         searchpa = new JPanel(new GridLayout(1,2));
-        searchpa.setBackground(Color.decode("#F44336"));
+        searchpa.setBackground(Color.decode("#F57C00"));
         search = new JButton("Search for Staff");
         search.setForeground(Color.WHITE);
-        search.setBackground(Color.decode("#e57373"));
+        search.setBackground(Color.decode("#E65100"));
         search.addActionListener(this);
         searchpa.setSize(500,60);
         searchtf = new TextHint("Enter Staff Id here ");
@@ -46,7 +46,7 @@ public class DeleteStaff extends JFrame implements ActionListener{
         header.add(headl);
         header.add(searchpa);
         body = new JPanel(new GridLayout(9,2));
-        body.setBackground(Color.decode("#FFCDD2"));
+        body.setBackground(Color.decode("#FFA726"));
 
         stsn = new JLabel();
         stsn.setForeground(Color.black);
@@ -149,17 +149,17 @@ public class DeleteStaff extends JFrame implements ActionListener{
         body.add(datetf);
 
         button = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        button.setBackground(Color.decode("#b71c1c"));
+        button.setBackground(Color.decode("#EF6C00"));
         isert = new JButton("Delete");
-        isert.setBackground(Color.decode("#e57373"));
+        isert.setBackground(Color.decode("#E65100"));
         isert.setForeground(Color.BLACK);
         isert.addActionListener(this);
         refresh = new JButton("Refresh");
-        refresh.setBackground(Color.decode("#e57373"));
+        refresh.setBackground(Color.decode("#E65100"));
         refresh.setForeground(Color.BLACK);
         refresh.addActionListener(this);
         back = new JButton("Back");
-        back.setBackground(Color.decode("#e57373"));
+        back.setBackground(Color.decode("#E65100"));
         back.setForeground(Color.BLACK);
         back.addActionListener(this);
         button.add(isert);button.add(refresh);button.add(back);
