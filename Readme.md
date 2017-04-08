@@ -1,7 +1,7 @@
-# Peagasus
+# DemoIMS
 ## Inventory management Software
 
-PGS (Pegasus) is purely a Java developed Software designed  for Inventory Stores. The Software features an administrator panel, cashier's view and many more
+DIMS is purely a Java developed Software designed  for Inventory Stores. The Software features an administrator panel, cashier's view and many more
 
 
 Although it's sill being developed but i just think it's one that the entire ***Java** community might find interesting.
