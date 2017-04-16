@@ -19,3 +19,4 @@ and the cashier interface looks like this ![screenshot from 2017-03-21 03 37 03]
 
 ## NOTE:
 1) As of the time of upload there was no MVC implemented in this projects
+2) This code is just a demo as most of its code has been updated and are not contained in this repository. 
